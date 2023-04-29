@@ -39,6 +39,19 @@ $optionsKeys: #0e0d0db6;
   width: 350px;
 }
 
+.textarea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  resize: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  outline: none;
+  border: 2px solid $purple;
+  border-radius: 0.5rem;
+}
+
 .upper {
   text-transform: uppercase;
 }
