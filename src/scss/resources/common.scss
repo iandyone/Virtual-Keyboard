@@ -1,16 +1,22 @@
-@import './variables.scss';
-@import './templates.scss';
-@import './mixins.scss';
-@import './keyframes.scss';
-@import './nullstyle.scss';
+@import "./variables.scss";
+@import "./templates.scss";
+@import "./mixins.scss";
+@import "./keyframes.scss";
+@import "./nullstyle.scss";
 
-.wraper {
-    min-height: 100%;
+.wrapper {
     width: 100%;
     overflow-x: hidden;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 992px;
     margin: 0px auto;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
 }
