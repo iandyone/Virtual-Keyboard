@@ -5,6 +5,7 @@
 $purple: #6868ff;
 $keyboardBG: #888888;
 $optionsKeys: #0e0d0db6;
+$hoverButotnColor: #96b372;
 
 * {
   margin: 0;
@@ -89,6 +90,17 @@ $optionsKeys: #0e0d0db6;
     cursor: pointer;
     user-select: none;
     transition: border-radius 0.3s, background-color 0.3s;
+    position: relative;
+
+    &:hover {
+      background-color: $hoverButotnColor;
+    }
+
+    &.pressed {
+      top: 2px;
+      left: 2px;
+      background-color: $hoverButotnColor;
+    }
   }
 
   & .AltLeft,
@@ -109,6 +121,10 @@ $optionsKeys: #0e0d0db6;
   & .MetaLeft {
     font-weight: 600;
     background-color: $optionsKeys;
+
+    &:hover {
+      background-color: $hoverButotnColor;
+    }
   }
 
   & .Backspace,
@@ -129,3 +145,8 @@ $optionsKeys: #0e0d0db6;
   }
 }
 
+.pressed {
+  top: 2px;
+  left: 2px;
+  background:$hoverButotnColor !important;
+}
