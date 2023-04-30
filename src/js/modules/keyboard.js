@@ -1,10 +1,14 @@
-const options = ["AltLeft", "AltRight", "Backspace", "CapsLock", "ControlLeft", "ControlRight", "Delete", "Enter", "ShiftLeft", "ShiftRight", "Tab", "MetaLeft"];
 const keyboardKeys = getKeyboardKeys();
-
 const textarea = document.querySelector(".textarea");
+const options = ["AltLeft", "AltRight", "Backspace", "CapsLock", "ControlLeft", "ControlRight", "Delete", "Enter", "ShiftLeft", "ShiftRight", "Tab", "MetaLeft"];
 
 export function printVirtualSymbol(event) {
   const currentKey = event.currentTarget.className.split(" ")[2];
+
+  if (currentKey === "Backspace") {
+    deletePrevSymbol();
+    return;
+  }
 
   if (keyboardKeys.includes(currentKey) && !options.includes(currentKey)) {
     if (event.currentTarget.classList.contains("Space")) {
@@ -30,6 +34,11 @@ export function printSymbol(event) {
     ArrowRight: "►",
   };
 
+  if (event.key === "Backspace") {
+    deletePrevSymbol();
+    return;
+  }
+
   if (keyboardKeys.includes(event.code) && !options.includes(event.code) && !Object.keys(exclusion).includes(event.code)) {
     textarea.value += event.key;
     return;
@@ -41,4 +50,13 @@ export function printSymbol(event) {
   }
 
   event.preventDefault();
+}
+
+/* ============== */
+
+function deletePrevSymbol() {
+  const textareaValue = textarea.value.split("");
+  textareaValue.pop();
+  textarea.value = textareaValue.join("");
+  return;
 }
