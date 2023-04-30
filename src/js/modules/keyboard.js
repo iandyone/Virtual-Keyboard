@@ -6,8 +6,8 @@ const isTextareaFocused = document.activeElement.closest("textarea");
 export function printVirtualSymbol(event) {
   const currentKey = event.currentTarget.className.split(" ")[2];
 
-  if (currentKey === "Backspace") {
-    deletePrevSymbol();
+  if (currentKey === "Backspace" || currentKey === "Delete") {
+    deleteSymbol(currentKey);
     return;
   }
 
@@ -39,11 +39,6 @@ export function printSymbol(event) {
       ArrowLeft: "◄",
       ArrowRight: "►",
     };
-
-    if (event.key === "Backspace") {
-      deletePrevSymbol();
-      return;
-    }
 
     if (keyboardKeys.includes(event.code) && !options.includes(event.code) && !Object.keys(exclusion).includes(event.code)) {
       printValue(event.key);
@@ -82,14 +77,24 @@ export function makeKeyboardButtonUnpressed(event) {
 }
 /* ============== */
 
-function deletePrevSymbol() {
-  if (isTextareaFocused) {
-    console.log();
+function deleteSymbol(button) {
+  const currentValue = textarea.value;
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
 
-    textarea.value = currentValue.slice(0, startPos - 1) + currentValue.slice(endPos);
-    textarea.setSelectionRange(startPos + 1, startPos + 1);
+  if (startPos === 0) {
     return;
   }
+
+  if (button === "Backspace") {
+    textarea.value = currentValue.slice(0, startPos - 1) + currentValue.slice(endPos);
+    textarea.setSelectionRange(startPos - 1, startPos - 1);
+  } else if (button === "Delete") {
+    textarea.value = currentValue.slice(0, startPos) + currentValue.slice(endPos + 1);
+    textarea.setSelectionRange(startPos, startPos);
+  }
+
+  textarea.focus();
 }
 
 function printValue(value) {
