@@ -1,10 +1,7 @@
 const keyboardKeys = getKeyboardKeys();
 const textarea = document.querySelector(".textarea");
 const options = ["AltLeft", "AltRight", "Backspace", "CapsLock", "ControlLeft", "ControlRight", "Delete", "Enter", "ShiftLeft", "ShiftRight", "Tab", "MetaLeft"];
-const isTextareaFocused = textarea === document.activeElement;
-const textareaValue = [];
-
-textarea.value = textareaValue;
+const isTextareaFocused = document.activeElement.closest("textarea");
 
 export function printVirtualSymbol(event) {
   const currentKey = event.currentTarget.className.split(" ")[2];
@@ -16,11 +13,11 @@ export function printVirtualSymbol(event) {
 
   if (keyboardKeys.includes(currentKey) && !options.includes(currentKey)) {
     if (event.currentTarget.classList.contains("Space")) {
-      textarea.value += " ";
+      printValue(" ");
       return;
     }
 
-    textarea.value += event.target.innerText;
+    printValue(event.target.innerText);
     event.preventDefault();
   }
 }
@@ -32,9 +29,6 @@ export function getKeyboardKeys() {
 }
 
 export function printSymbol(event) {
-  // console.log(event.code);
-  // document.querySelector(`.${event.code}`).classList.add('pressed');
-
   if (!isTextareaFocused) {
     const exclusion = {
       ArrowUp: "▲",
@@ -49,12 +43,12 @@ export function printSymbol(event) {
     }
 
     if (keyboardKeys.includes(event.code) && !options.includes(event.code) && !Object.keys(exclusion).includes(event.code)) {
-      textarea.value += event.key;
+      printValue(event.key);
       return;
     }
 
     if (Object.keys(exclusion).includes(event.code)) {
-      textarea.value += exclusion[event.code];
+      printValue(exclusion[event.code]);
       return;
     }
 
@@ -86,8 +80,24 @@ export function makeKeyboardButtonUnpressed(event) {
 /* ============== */
 
 function deletePrevSymbol() {
-  const textareaCurrentValue = textarea.value.split("");
-  textareaCurrentValue.pop();
-  textarea.value = textareaCurrentValue.join("");
-  return;
+  if(isTextareaFocused) {
+  
+    console.log();
+  
+    textarea.value = currentValue.slice(0, startPos - 1) + currentValue.slice(endPos);
+    textarea.selectionStart = startPos - 1;
+    textarea.selectionEnd = endPos - 1;
+    return;
+  }
+  
+}
+
+function printValue(value) {
+  const currentValue = textarea.value;
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+
+  textarea.value = currentValue.slice(0, startPos) + value + currentValue.slice(endPos);
+  textarea.selectionStart = startPos + 1;
+  textarea.selectionEnd = endPos + 1;
 }

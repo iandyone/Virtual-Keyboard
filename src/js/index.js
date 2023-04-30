@@ -8,7 +8,6 @@ document.documentElement.addEventListener("keydown", printSymbol);
 document.documentElement.addEventListener('keydown', makeKeyboardButtonPressed)
 document.documentElement.addEventListener("keyup", makeKeyboardButtonUnpressed);``
 
-
 keys.forEach((key) => {
   key.addEventListener("click", printVirtualSymbol);
   key.addEventListener("mousedown", makeButtonPressed);
