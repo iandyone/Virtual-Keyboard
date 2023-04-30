@@ -17,7 +17,10 @@ export function printVirtualSymbol(event) {
       return;
     }
 
+    const startPos = textarea.selectionStart;
     printValue(event.target.innerText);
+    textarea.selectionStart = startPos + 1;
+
     event.preventDefault();
   }
 }
@@ -44,15 +47,15 @@ export function printSymbol(event) {
 
     if (keyboardKeys.includes(event.code) && !options.includes(event.code) && !Object.keys(exclusion).includes(event.code)) {
       printValue(event.key);
+      event.preventDefault();
       return;
     }
 
     if (Object.keys(exclusion).includes(event.code)) {
       printValue(exclusion[event.code]);
+      event.preventDefault();
       return;
     }
-
-    // event.preventDefault();
   }
 }
 
@@ -80,16 +83,13 @@ export function makeKeyboardButtonUnpressed(event) {
 /* ============== */
 
 function deletePrevSymbol() {
-  if(isTextareaFocused) {
-  
+  if (isTextareaFocused) {
     console.log();
-  
+
     textarea.value = currentValue.slice(0, startPos - 1) + currentValue.slice(endPos);
-    textarea.selectionStart = startPos - 1;
-    textarea.selectionEnd = endPos - 1;
+    textarea.setSelectionRange(startPos + 1, startPos + 1);
     return;
   }
-  
 }
 
 function printValue(value) {
@@ -98,6 +98,6 @@ function printValue(value) {
   const endPos = textarea.selectionEnd;
 
   textarea.value = currentValue.slice(0, startPos) + value + currentValue.slice(endPos);
-  textarea.selectionStart = startPos + 1;
-  textarea.selectionEnd = endPos + 1;
+  textarea.setSelectionRange(startPos + 1, startPos + 1);
+  textarea.focus();
 }
