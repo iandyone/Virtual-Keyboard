@@ -6,6 +6,7 @@ let CAPS = false;
 
 export function printVirtualSymbol(event) {
   const currentKey = event.currentTarget.className.split(" ")[2];
+  console.log(currentKey);
 
   if (currentKey === "Backspace" || currentKey === "Delete") {
     deleteSymbol(currentKey);
@@ -77,11 +78,23 @@ export function getKeyboardKeys() {
 }
 
 export function makeButtonPressed(event) {
+  const eventClassList = event.currentTarget.classList;
+
+  if (eventClassList.contains("ShiftLeft") || eventClassList.contains("ShiftRight")) {
+    changeKeysValues("shift");
+  }
+
   event.currentTarget.classList.add("pressed");
 }
 
 export function makeButtonUnpressed(event) {
+  const eventClassList = event.currentTarget.classList;
   event.currentTarget.classList.remove("pressed");
+
+  if (eventClassList.contains("ShiftLeft") || eventClassList.contains("ShiftRight")) {
+    CAPS ? changeKeysValues("caps") : changeKeysValues("lower-case");
+    return;
+  }
 }
 
 export function makeKeyboardButtonPressed(event) {
@@ -89,6 +102,11 @@ export function makeKeyboardButtonPressed(event) {
 
   if (event.code === "CapsLock") {
     return;
+  }
+
+  if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+    changeKeysValues("shift");
+    key.classList.add("pressed");
   }
 
   if (key) {
@@ -101,6 +119,10 @@ export function makeKeyboardButtonUnpressed(event) {
 
   if (event.code === "CapsLock") {
     return;
+  }
+
+  if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+    CAPS ? changeKeysValues("caps") : changeKeysValues("lower-case");
   }
 
   if (key) {
@@ -133,7 +155,6 @@ function printValue(value) {
   const currentValue = textarea.value;
   const startPos = textarea.selectionStart;
   const endPos = textarea.selectionEnd;
-  
 
   textarea.value = currentValue.slice(0, startPos) + value + currentValue.slice(endPos);
   textarea.setSelectionRange(startPos + 1, startPos + 1);
