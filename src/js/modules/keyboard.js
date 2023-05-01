@@ -17,6 +17,10 @@ export function printVirtualSymbol(event) {
     printValue("\t");
     return;
   }
+  if (currentKey === "Enter") {
+    printValue("\n");
+    return;
+  }
 
   if (currentKey === "CapsLock") {
     setCaps(event);
@@ -48,6 +52,11 @@ export function printSymbol(event) {
 
     if (event.code === "Tab") {
       printValue("\t");
+      event.preventDefault();
+    }
+
+    if (event.code === "Enter") {
+      printValue("\n");
       event.preventDefault();
     }
 
