@@ -2,10 +2,11 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
 
-$purple: #6868ff;
-$keyboardBG: #888888;
-$optionsKeys: #0e0d0db6;
+$keyboardBG: #2D2727    ;
+$optionsKeys: #413543;
+$buttonBG: #8F43EE  ;
 $hoverButotnColor: #96b372;
+
 
 * {
   margin: 0;
@@ -49,7 +50,7 @@ $hoverButotnColor: #96b372;
   padding: 0.5rem;
   font-size: 1.2rem;
   outline: none;
-  border: 2px solid $purple;
+  border: 2px solid $buttonBG;
   border-radius: 0.5rem;
 }
 
@@ -85,7 +86,7 @@ $hoverButotnColor: #96b372;
     line-height: 40px;
     text-align: center;
     color: #ffffff;
-    background: #444444;
+    background: $buttonBG;
     border-radius: 3px;
     cursor: pointer;
     user-select: none;

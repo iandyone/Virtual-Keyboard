@@ -6,7 +6,6 @@ let CAPS = false;
 
 export function printVirtualSymbol(event) {
   const currentKey = event.currentTarget.className.split(" ")[2];
-  console.log(currentKey);
 
   if (currentKey === "Backspace" || currentKey === "Delete") {
     deleteSymbol(currentKey);
@@ -17,13 +16,14 @@ export function printVirtualSymbol(event) {
     printValue("\t");
     return;
   }
-  if (currentKey === "Enter") {
-    printValue("\n");
-    return;
-  }
 
   if (currentKey === "CapsLock") {
     setCaps(event);
+    return;
+  }
+
+  if (currentKey === "Enter") {
+    printValue("\n");
     return;
   }
 
@@ -55,16 +55,18 @@ export function printSymbol(event) {
       event.preventDefault();
     }
 
-    if (event.code === "Enter") {
-      printValue("\n");
-      event.preventDefault();
-    }
-
     if (event.code === "CapsLock") {
       setCaps(event);
       event.preventDefault();
       return;
     }
+
+    if (event.code === "Enter") {
+      printValue("\n");
+      event.preventDefault();
+    }
+
+   
 
     if (keyboardKeys.includes(event.code) && !options.includes(event.code) && !Object.keys(exclusion).includes(event.code)) {
       printValue(event.key);
