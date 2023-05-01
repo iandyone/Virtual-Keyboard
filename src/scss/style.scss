@@ -151,3 +151,14 @@ $hoverButotnColor: #96b372;
   left: 2px;
   background:$hoverButotnColor !important;
 }
+
+.text {
+  margin: 60px 0px 0px 0px;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
